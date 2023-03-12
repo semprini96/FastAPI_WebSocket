@@ -3,7 +3,8 @@
     <head>
         <title>Random cats fact</title>
         <script>
-            let socket = new WebSocket('ws://localhost:8000/ws');
+            var clientID = Date.now();
+            let socket = new WebSocket(`ws://localhost:8000/ws/${clientID}`);
 
             socket.onopen = function(e) {
                 socket.send('echo')
