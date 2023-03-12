@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Random cats fact</title>
+        <script>
+            let socket = new WebSocket('ws://localhost:8000/ws');
+
+            socket.onopen = function(e) {
+                socket.send('echo')
+                console.log('Socket opened')
+            }
+
+            socket.onmessage = function(event) {
+                fact_data = JSON.parse(event.data)
+                document.getElementById('fact').innerHTML = fact_data['fact'];
+            };
+
+            socket.onclose = function() {
+                console.log('Socket closed')
+            }
+
+            // window.setInterval(function() {
+            //     socket.send('echo');
+            // }, 10000);
+            setInterval(() => socket.send('echo'), 10000);
+        </script>
+    </head>
+    <body>
+        <h1>Random cats fact</h1>
+        <div id="fact">
+            Fact will land here
+        </div>
+    </body>
+</html>
